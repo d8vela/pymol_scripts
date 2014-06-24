@@ -1,23 +1,24 @@
-run ~/bin/tmalign.py
 
 _ feedback push
 _ feedback disable,all,everything
 
 from pymol import cmd
-
 import sys
+import os
 
-sys.path.append("/Users/davela/scripts/python_scripts/")
-sys.path.append("/Users/davela/scripts/python_scripts/pymol_scripts")
+home = os.environ.get('HOME');
+
+sys.path.append("%s/scripts/python_scripts/"%(home))
+sys.path.append("%s/scripts/python_scripts/pymol_scripts"%(home))
 
 from pymol_scripts import *
 
-run /Users/davela/scripts/python_scripts/pymol_scripts/all_commands.py
+run "%s/scripts/python_scripts/pymol_scripts/all_commands.py"%(home)
+run "%s/scripts/DockScripts/pymol/load_sep.py"%(home)
+run "%s/scripts/DockScripts/pymol/obj_arrows.py"%(home)
+run "%s/bin/tmalign.py"%(home)
 
-run /Users/davela/scripts/DockScripts/pymol/load_sep.py
-run /Users/davela/scripts/DockScripts/pymol/obj_arrows.py
-
-aaindex.init("/Users/davela/scripts/python_scripts/pymol_scripts/aaindex")
+aaindex.init("%s/scripts/python_scripts/pymol_scripts/aaindex"%(home))
 
 useRosettaRadii
 
