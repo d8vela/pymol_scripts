@@ -50,6 +50,7 @@ alias cg, object=cmd.get_names()[0]; cmd.view('v', 'store'); util.protein_vacuum
 alias surf, cmd.extract('target', 'chainA'); cmd.view('v', 'store'); util.protein_vacuum_esp('target', mode=2, quiet=0); cmd.disable('target' + "_e_pot"); cmd.enable('target'); cmd.view('v', 'recall'); cmd.zoom('interface'); cmd.create('inter_bawls','interfaceB'); cmd.show('spheres','inter_bawls'); cmd.disable('inter_bawls'); cmd.create('inter_cage',"interfaceB"); cmd.show('mesh','inter_cage'); cmd.color('magenta','inter_cage'); cmd.util.cnc('inter_cage'); cmd.disable('inter_cage'); useRosettaRadii;
 
 alias bam, pdbdircyclerlite; set_cycler_command 'stiq; show cartoon; useRosettaRadii'; stiq; useRosettaRadii; show cartoon;
+alias core_set, set_cycler_command 'stiq; show cartoon; useRosettaRadii; core'; stiq; core; useRosettaRadii; show cartoon;
 
 alias count, print "\\n\\nNumber of Selected Residues: %i\\n" % len(cmd.get_model("sele").get_residues());
 alias pack, show sphere, sele; useRosettaRadii;
