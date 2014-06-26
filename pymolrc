@@ -56,4 +56,6 @@ alias pack, show sphere, sele; useRosettaRadii;
 alias poof, hide sphere;
 alias kool, cmd.spectrum("b","green_white_red","chain B",minimum=0,maximum=250);
 
+alias core, findSurfaceResidues; cmd.select('core_res','not exposed_res_01 and chain B'); cmd.create('core_pack','core_res'); cmd.create('core_cage','core_res'); cmd.show('sphere','core_pack'); util.cbag('core_pack'); cmd.create('core_cage','core_res'); cmd.show('mesh','core_cage'); util.cbag('core_cage'); cmd.select('surf_res','exposed_res_01 and chain B'); cmd.create('surf_pack','surf_res'); cmd.show('sphere','surf_pack'); util.cbam('surf_pack'); cmd.create('surf_cage','surf_res'); cmd.show('mesh','surf_cage'); util.cbam('surf_cage'); cmd.disable('core_pack'); cmd.disable('core_cage'); cmd.disable('surf_pack'); cmd.disable('surf_cage'); useRosettaRadii;
+
 
