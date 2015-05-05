@@ -22,6 +22,8 @@ def resfile(file,color="red"):
 			# Generate Mutation Label
 			label = mut
 			label_list = list(label)
+			# First Amino Acid in List is Assumed Native
+			# Insert Position Number After First Residue in the List
 			label_list.insert(1,"%s"%(pos))
 			label = ''.join(label_list)
 			
