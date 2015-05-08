@@ -12,7 +12,8 @@ here -- Description.
 
 __all__ = [
     "aaindex",
-	"Resfile",
+    "Resfile",
+    "Gremlin",
     "Mutations",
     "Native",
     "Cycler",
