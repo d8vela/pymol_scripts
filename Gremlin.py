@@ -5,7 +5,7 @@ from pymol import cmd
 
 import sys,os
 
-def gremlin(file,chain='B',score=1,inc='0',color="red"):
+def gremlin(file,chain='B',score_th=1,inc='0',color="red"):
 
 	count = 0
 	pos1 = 0
@@ -20,7 +20,7 @@ def gremlin(file,chain='B',score=1,inc='0',color="red"):
 		# Split Resfile Line by Tab
 		data = line.split(' ')
 		
-		# Only Consider Lines that Start with Residue Numbers
+		# Only Consider Lines that have the Pattern
 		pair = data[0]
 		if pattern.search(pair):
 			print pair
@@ -42,12 +42,11 @@ def gremlin(file,chain='B',score=1,inc='0',color="red"):
 				pos1 += int(inc)
 				pos2 += int(inc)
 
-				count += 1
-				if count <= 100:
+				if score >= score_th:
 					cmd.distance("resi %i and name ca and chain %s"%(pos1,chain),"resi %i and name ca and chain %s"%(pos2,chain))
 			
 			# PyMOL Color and Label
-#cmd.label("resi %s+%s and chain %s and name ca"%(,chain),"\'%s\'"%(label))
+			#cmd.label("resi %s+%s and chain %s and name ca"%(,chain),"\'%s\'"%(label))
 
 cmd.extend("gremlin",gremlin)
 
