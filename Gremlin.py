@@ -5,7 +5,7 @@ from pymol import cmd
 
 import sys,os
 
-def gremlin(file,chain='B',score_th=1,inc='0',color="red"):
+def gremlin(file,chain='B',s_score_th=1.5,prob_th=1,inc='0',color="red"):
 
 	count = 0
 	pos1 = 0
@@ -28,14 +28,17 @@ def gremlin(file,chain='B',score_th=1,inc='0',color="red"):
 		# Only Consider Lines that have the Pattern
 		pair = data[0]
 		if pattern.search(pair):
-			print pair
+#print pair
 			contact = pair.split('_')
 			pos1 = int(contact[0])
 			pos2 = int(contact[1])
 			aa = contact[2]
 
 			if aa == 'X':
-				score = data[1]
+				l2_score = float(data[1])
+				s_score = float(data[2])
+				prob = float(data[3])
+				print prob
 
 				if pos1 == pos1_rem:
 					continue
@@ -49,13 +52,13 @@ def gremlin(file,chain='B',score_th=1,inc='0',color="red"):
 				pos1 += int(inc)
 				pos2 += int(inc)
 
-				if score >= score_th:
+				if prob >= float(prob_th) and s_score >= float(s_score_th):
 					dist = cmd.distance("%s"%(pair),"resi %i and name ca and chain %s"%(pos1,chain),"resi %i and name ca and chain %s"%(pos2,chain))
-					if dist <= 8:
+					if dist <= 12:
 						cmd.set("dash_color","yellow","%s"%(pair))
-					if dist > 8 and dist <= 21:
+					if dist > 12 and dist <= 20:
 						cmd.set("dash_color","orange","%s"%(pair))
-					if dist > 21:
+					if dist > 20:
 						cmd.set("dash_color","red","%s"%(pair))
 			
 			# PyMOL Color and Label
