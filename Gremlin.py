@@ -16,7 +16,6 @@ def gremlin(file,chain='B',s_score_th=1.5,prob_th=1,inc='0',color="red"):
 
 	# Initial Parameters
 	cmd.set("dash_gap","0")
-	cmd.set("dash_color","green")
 	cmd.set("dash_width","6") # max is 6
 
 	# Read Gremlin File
