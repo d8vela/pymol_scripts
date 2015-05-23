@@ -14,13 +14,14 @@ sys.path.append("%s/scripts/python_scripts/pymol_scripts"%(home))
 from pymol_scripts import *
 
 run "%s/scripts/python_scripts/pymol_scripts/all_commands.py"%(home)
-run "%s/scripts/DockScripts/pymol/load_sep.py"%(home)
-run "%s/scripts/DockScripts/pymol/obj_arrows.py"%(home)
+#run "%s/scripts/DockScripts/pymol/load_sep.py"%(home)
+#run "%s/scripts/DockScripts/pymol/obj_arrows.py"%(home)
 run "%s/bin/tmalign.py"%(home)
 
 aaindex.init("%s/scripts/python_scripts/pymol_scripts/aaindex"%(home))
 
 useRosettaRadii
+set ray_opaque_background, off
 
 # END COMMANDS
 _ feedback pop

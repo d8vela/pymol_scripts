@@ -4,7 +4,7 @@ from pymol import cmd
 
 import sys,os
 
-def resfile(file,color="red"):
+def resfile(file,chain="B",color="red"):
 
 	# Read Rosetta Resfile
 	for line in open(file):

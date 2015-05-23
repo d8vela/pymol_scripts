@@ -1,3 +1,6 @@
+import pymol
+from pymol import cmd
+
 def transform_by_camera_rotation():
      view = list(cmd.get_view())
      M = view[0:3] + [-view[12]] + \

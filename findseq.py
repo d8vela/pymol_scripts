@@ -59,6 +59,7 @@ AUTHOR:
 Jason Vertrees, 2009.
 """
 
+import pymol
 from pymol import cmd
 import re
 import types
