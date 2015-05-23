@@ -28,6 +28,9 @@ __all__ = [
     "LigandView",
     "CavityView",
     "FindSurfaceResidues",
+	"sym_util.py",
+	"transform.py",
+	"findseq.py",
     ]
 
 
