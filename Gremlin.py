@@ -18,6 +18,11 @@ def gremlin(file,chain='B',s_score_th=1.5,prob_th=1,inc='0',color="red"):
 	cmd.set("dash_gap","0")
 	cmd.set("dash_width","6") # max is 6
 
+	# Display Setup
+	cmd.disable("hbonds");
+	cmd.delete("*_X");
+
+
 	# Read Gremlin File
 	for line in open(file):
 		
@@ -61,7 +66,7 @@ def gremlin(file,chain='B',s_score_th=1.5,prob_th=1,inc='0',color="red"):
 						cmd.set("dash_color","red","%s"%(pair))
 			
 			# PyMOL Color and Label
-			#cmd.label("resi %s+%s and chain %s and name ca"%(,chain),"\'%s\'"%(label))
+			#cmd.label("resi %s+%s and chain %s and name ca"%(chain),"\'%s\'"%(label))
 
 cmd.extend("gremlin",gremlin)
 
