@@ -22,7 +22,6 @@ def gremlin(file,chain='B',s_score_th=1.5,prob_th=1,inc='0',color="red"):
 	cmd.disable("hbonds");
 	cmd.delete("*_X");
 
-
 	# Read Gremlin File
 	for line in open(file):
 		
