@@ -11,6 +11,8 @@ here -- Description.
 """
 
 __all__ = [
+    "Pose",
+    "findseq",
     "aaindex",
     "Resfile",
     "Gremlin",
@@ -29,8 +31,7 @@ __all__ = [
     "CavityView",
     "FindSurfaceResidues",
     "sym_util",
-    "transform",
-    "findseq",
+    "transform"
     ]
 
 
