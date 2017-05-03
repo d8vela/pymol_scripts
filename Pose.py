@@ -26,6 +26,43 @@ def pdb2pose():
 
 cmd.extend("pdb2pose", pdb2pose)
 
+# ---- Movers ----
+
+def Pack():
+	from rosetta import *
+	from pyrosetta import *
+	init()
+
+	pose = pdb2pose()
+
+	# PyMOL Mover
+	pymover = PyMOLMover()
+
+	# Get ddG
+	full_scorefxn = create_score_function('talaris2013')
+
+	# Setup Packer
+	pose_packer = standard_packer_task(pose)
+	pose_packer.restrict_to_repacking() # No Design
+	pose_packer.or_include_current(True)
+	print ( pose_packer)
+	packmover = protocols.simple_moves.PackRotamersMover(full_scorefxn, pose_packer)
+
+	# Side-Chain Packing
+	packmover.apply(pose)
+	total_energy = full_scorefxn(pose)
+
+	# Update PyMOL Session
+	pose.pdb_info().name('Packed') # For PyMOLMover
+	pymover.apply(pose)
+
+	# Output Total Energy of Packed Structure
+	print "Total Energy: ", total_energy
+
+cmd.extend("Pack", Pack)
+
+# ---- Filters ----
+
 def NetCharge():
 	from rosetta import *
 	from pyrosetta import *
@@ -63,13 +100,28 @@ def Ddg():
 	# Get ddG
 	full_scorefxn = create_score_function('talaris2013')
 
-	# Bound
+	# Setup Packer
+	pose_packer = standard_packer_task(pose)
+	pose_packer.restrict_to_repacking()
+	pose_packer.or_include_current(True)
+	print ( pose_packer)
+	packmover = protocols.simple_moves.PackRotamersMover(full_scorefxn, pose_packer)
+
+
+	# Side-Chain Packing Of Bound
+	packmover.apply(pose)
+
+	# Total Energy of Bound
 	dG_bound = full_scorefxn(pose)
 
-	# Unbound
+
+	# Side-Chain Packing Of Unbound
 	translate = protocols.rigid.RigidBodyTransMover(pose,1)
 	translate.step_size(1000)
 	translate.apply(pose)
+	packmover.apply(pose)
+
+	# Total Energy of Unbound
 	dG_unbound = full_scorefxn(pose)
 
 	# Get ddG
