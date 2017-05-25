@@ -4,13 +4,14 @@ from pymol import cmd
 
 import sys,os
 
-def resfile(file,chain="B",color="red"):
+def resfile(file,color="red"):
 
 	# Read Rosetta Resfile
 	for line in open(file):
 		
 		# Split Resfile Line by Tab
-		data = line.split('\t')
+		#data = line.split('\t')
+		data = line.split()
 		
 		# Only Consider Lines that Start with Residue Numbers
 		if data[0].isdigit():
@@ -30,7 +31,11 @@ def resfile(file,chain="B",color="red"):
 			
 			# PyMOL Color and Label
 			cmd.color(color,"resi %s and chain %s"%(pos,chain))
-			cmd.label("resi %s and chain %s and name ca"%(pos,chain),"\'%s\'"%(label))
+			cmd.label("resi %s and chain %s and name CA"%(pos,chain),"\'%s\'"%(label))
+
+			# Create Selections by Chain
+			cmd.select("\'%s Chain %s\'"%(label,chain),"resi %s and chain %s and name CA"%(pos,chain))
+			
 		# Output Comments to the Console
 		elif line[:1] == "#":
 			# Remove newline feeds
