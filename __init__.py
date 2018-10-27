@@ -31,7 +31,7 @@ __all__ = [
     "CavityView",
     "FindSurfaceResidues",
     "sym_util",
-    "transform"
+    "transform",
     ]
 
 
