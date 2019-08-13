@@ -73,9 +73,13 @@ alias mw, one_letter ={'VAL':99.14, 'ILE':113.17, 'LEU':113.17, 'GLU':129.12, 'G
 
 alias hismw, one_letter ={'VAL':99.14, 'ILE':113.17, 'LEU':113.17, 'GLU':129.12, 'GLN':128.41,'ASP':115.09, 'ASN':114.11, 'HIS':137.15, 'TRP':186.21, 'PHE':147.18, 'TYR':163.18, 'ARG':156.20, 'LYS':128.18, 'SER':87.08, 'THR':101.11, 'MET':131.21, 'ALA':71.08,'GLY':57.06, 'PRO':97.12, 'CYS':103.14}; pyMOLSeqMW = []; cmd.iterate("sele and n. CA", "pyMOLSeqMW.append(one_letter[resn])"); MW = sum(pyMOLSeqMW); HISMW = (MW + 18.02 + 1184.4) / 1000; HISMW = round(HISMW,3); print "\\nMolecular Weight:\\n%s kDa" % (HISMW);
 
+alias cdr, util.cbc; select H1, resi 26-39 and chain H; color red, H1; select H2, resi 57-63 and chain H; color cyan, H2; select H3, resi 106-117 and chain H; color yellow, H3; select L1, resi 26-39 and chain L; color red, L1; select L2, resi 55-75 and chain L; color green, L2; select L3, resi 106-117 and chain L; color yellow, L3; util.cnc; select CDR_Heavy, H*; select CDR_Light, L*; select CDR_ALL, H* L*; deselect;
 
+alias cdrx, util.cbc; select H1, resi 26-39 and chain H; color red, H1; select H2, resi 57-63 and chain H; color cyan, H2; select H3, resi 106-117 and chain H; color yellow, H3; select L1, resi 26-39 and chain L; color red, L1; select L2, resi 55-75 and chain L; color green, L2; select L3, resi 106-117 and chain L; color yellow, L3; util.cnc; select CDR_Heavy, H*; select CDR_Light, L*; select CDR_ALL, H* L*; show sticks, not hydro; show dots, CDR_ALL; deselect;
 
-alias cdr, util.cbc; select H1, resi 26-39 and chain H; color red, H1; select H2, resi 57-63 and chain H; color cyan, H2; select H3, resi 106-117 and chain H; color yellow, H3; select L1, resi 23-42 and chain L; color red, L1; select L2, resi 56-66 and chain L; color green, L2; select L3, resi 106-117 and chain L; color yellow, L3; util.cnc; select CDR_Heavy, H*; select CDR_Light, L*; select CDR_ALL, H* L*; deselect;
+alias lsres, print; print "Residue Selection: "; res_list = []; cmd.iterate("sele and n. CA","res_list.append(resi)"); res_list = ','.join(res_list); print res_list; print;
 
-alias cdrx, util.cbc; select H1, resi 26-39 and chain H; color red, H1; select H2, resi 57-63 and chain H; color cyan, H2; select H3, resi 106-117 and chain H; color yellow, H3; select L1, resi 23-42 and chain L; color red, L1; select L2, resi 56-66 and chain L; color green, L2; select L3, resi 106-117 and chain L; color yellow, L3; util.cnc; select CDR_Heavy, H*; select CDR_Light, L*; select CDR_ALL, H* L*; show sticks, not hydro; show dots, CDR_ALL; deselect;
+alias clean, delete interface*; delete chain*; delete heavy*, delete light*; delete sele;
+alias site, cmd.select("site", "br. sele around 4.5 and not HET");
+
 
