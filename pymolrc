@@ -80,6 +80,6 @@ alias cdrx, util.cbc; select H1, resi 26-39 and chain H; color red, H1; select H
 alias lsres, print; print "Residue Selection: "; res_list = []; cmd.iterate("sele and n. CA","res_list.append(resi)"); res_list = ','.join(res_list); print res_list; print;
 
 alias clean, delete interface*; delete chain*; delete heavy*, delete light*; delete sele;
-alias site, cmd.select("site", "br. sele around 4.5 and not HET");
+alias site, cmd.select("site", "br. sele around 4.5 and not HET"); enable site;
 
 
