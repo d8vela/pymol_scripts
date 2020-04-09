@@ -65,7 +65,7 @@ def na():
 	cmd.orient(object)
 	
 	pdbid = pdbid.lower()
-	cmd.system("rm %s.pdb"%(pdbid));
+	cmd.system("rm %s.cif"%(pdbid));
 	
 	cmd.view('v', 'recall')
 
