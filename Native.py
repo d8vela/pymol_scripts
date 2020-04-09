@@ -38,7 +38,7 @@ def na():
 	cmd.view('v', 'store');
 	
 	
-	object = cmd.get_names()[0]
+	object = cmd.get_names()[0].upper()
 
 	if object[0] == 'd':
 		pdbid = object[1:5]
