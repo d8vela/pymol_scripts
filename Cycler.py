@@ -75,7 +75,7 @@ class LoadDeleteCycler(object):
         for i in range(l):
             if objname(choices[i]) == loaded:
                 next_file = choices[ (i+by) % l ]
-		next_index = i+by;
+                next_index = i+by
                 break
         cmd.delete('all')
         if not os.path.exists(next_file):
@@ -88,7 +88,7 @@ class LoadDeleteCycler(object):
             logging.debug("onload_command: %s", self.onload_command)
             cmd.do(self.onload_command)
 	
-	new_message = "%i %s" % (next_index, next_file)
+        new_message = "%i %s" % (next_index, next_file)
         cmd.replace_wizard('message',new_message)
 
     def choices(self):

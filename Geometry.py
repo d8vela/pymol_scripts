@@ -14,7 +14,7 @@ def getAtomProjectionOnPlane(sel,a,b,c,d):# specify d as distance along norm fro
 	return slice
 
 def getAtomProjectionAsR(sel='all',fname='points.R',a=1,b=0,c=0,d=0,varname='slice'):	
-	print "write projections to file",fname
+	print("write projections to file",fname)
 	o = open(fname,'w')
 	o.write( projectionAsRString(sel,a,b,c,d,varname) )
 	o.close()
@@ -39,19 +39,19 @@ def projectionAsRString(sel='all',a=0,b=0,c=1,d=0,varname='slice'):
 		atype = pa.atom.symbol
 		occ = pa.atom.q
 		bfac = pa.atom.b
-		s += "%(varname)s[%(ii)i,1] = "%vars() + `x` + '\n' 
-		s += "%(varname)s[%(ii)i,2] = "%vars() + `y` + '\n' 
-		s += "%(varname)s[%(ii)i,3] = "%vars() + `z` + '\n' 
-		s += "%(varname)s[%(ii)i,4] = "%vars() + `r` + '\n' 
-		s += "%(varname)s[%(ii)i,5] = "%vars() + `ox` + '\n' 
-		s += "%(varname)s[%(ii)i,6] = "%vars() + `oy` + '\n' 
-		s += "%(varname)s[%(ii)i,7] = "%vars() + `oz` + '\n' 
-		s += "%(varname)s[%(ii)i,8] = "%vars() + `origr` + '\n' 
-		s += "%(varname)s[%(ii)i,9] = "%vars() + `signdis` + '\n' 
-		s += "%(varname)s[%(ii)i,9] = "%vars() + `signdis` + '\n' 
-		s += "%(varname)s$atype[%(ii)i] = "%vars() + `atype` + '\n' 
-		s += "%(varname)s$occ[%(ii)i] = "%vars() + `occ` + '\n' 
-		s += "%(varname)s$bfac[%(ii)i] = "%vars() + `bfac` + '\n' 
+		s += "%(varname)s[%(ii)i,1] = "%vars() + repr(x) + '\n' 
+		s += "%(varname)s[%(ii)i,2] = "%vars() + repr(y) + '\n' 
+		s += "%(varname)s[%(ii)i,3] = "%vars() + repr(z) + '\n' 
+		s += "%(varname)s[%(ii)i,4] = "%vars() + repr(r) + '\n' 
+		s += "%(varname)s[%(ii)i,5] = "%vars() + repr(ox) + '\n' 
+		s += "%(varname)s[%(ii)i,6] = "%vars() + repr(oy) + '\n' 
+		s += "%(varname)s[%(ii)i,7] = "%vars() + repr(oz) + '\n' 
+		s += "%(varname)s[%(ii)i,8] = "%vars() + repr(origr) + '\n' 
+		s += "%(varname)s[%(ii)i,9] = "%vars() + repr(signdis) + '\n' 
+		s += "%(varname)s[%(ii)i,9] = "%vars() + repr(signdis) + '\n' 
+		s += "%(varname)s$atype[%(ii)i] = "%vars() + repr(atype) + '\n' 
+		s += "%(varname)s$occ[%(ii)i] = "%vars() + repr(occ) + '\n' 
+		s += "%(varname)s$bfac[%(ii)i] = "%vars() + repr(bfac) + '\n' 
 	return s
 
 def multiSliceAsR(sel='all',fname='/tmp/points.R',a=0,b=0,c=1,interval=1,varname='slice'):
@@ -68,7 +68,7 @@ def multiSliceAsR(sel='all',fname='/tmp/points.R',a=0,b=0,c=1,interval=1,varname
 	o = open(fname,'w')
 	o.write( "%(varname)s = list() \n"%vars() )
 	for ii,d in enumerate(range(mn,mx,interval)):
-		print 'slice',ii,d
+		print('slice',ii,d)
 		variter = varname+"[[%i]]"%(ii+1)
 		o.write( projectionAsRString(sel,a,b,c,d,varname=variter) )
 	o.close()
@@ -85,8 +85,8 @@ def scaleCoords(amount=1.0,sel='all'):
 	for a in m.atom:
 		if a.index == 80:
 			delta = [float(k)*(amount-1) for k in a.coord]
-			print amount, a.coord, delta
-			cmd.translate( [ delta[0], delta[1], delta[2] ] , "index "+`a.index`)
+			print(amount, a.coord, delta)
+			cmd.translate( [ delta[0], delta[1], delta[2] ] , "index "+repr(a.index))
 
 class ProjectedAtom(object):
 	"""The ProjectedAtom class."""

@@ -16,14 +16,14 @@ def guesscxaxis(sele,nfold=None,chains=list(),extrasel="name CA"):
 	if not nfold: nfold = len(chains)
 	# print chains
 	if len(chains) != nfold:
-		print chains
-		print "num chains != n-fold"
+		print(chains)
+		print("num chains != n-fold")
 		return None
 	atoms = cmd.get_model(sele).atom
 	idx = {}
 	for i,c in enumerate(chains): idx[c] = i
 	coords = [list() for c in chains]
-	print len(coords),[len(x) for x in coords]
+	print(len(coords),[len(x) for x in coords])
 	for a in atoms:
 		if a.chain in idx:
 			coords[idx[a.chain]].append(Vec(a.coord))
@@ -63,7 +63,7 @@ def symmetrize(sele="not symmetrized_*",alignsele=None,chains=list(),delete=True
 		cmd.create(newobj,"(%s) and chain %s"%(sele,chains[0]))
 		cmd.alter(newobj,"chain='%s'"%c)
 		rot(newobj,axis,360.0*float(i)/float(len(chains)),cen)
-		print "rot(",newobj,',',axis,',',360.0*float(i)/float(len(chains)),',',cen,')'
+		print("rot(",newobj,',',axis,',',360.0*float(i)/float(len(chains)),',',cen,')')
 	newobj = "symmetrized_%i"%(nsymmetrizecx)
 	cmd.create(newobj,"symmetrized_%i_*"%(nsymmetrizecx))
 	cmd.delete("symmetrized_%i_*"%nsymmetrizecx)
@@ -179,7 +179,7 @@ def mki213(N, sel = 'all'):
 	R2 = [xyz.rotation_matrix_degrees(a2, 0), xyz.rotation_matrix_degrees(a2, 180), ]
 	R3 = [xyz.rotation_matrix_degrees(a3, 0), xyz.rotation_matrix_degrees(a3, 120), xyz.rotation_matrix_degrees(a3, 240), ]
 	C = alphabet
-	print a2, c2, a3, c3
+	print(a2, c2, a3, c3)
 	for i21 in range(2):
 		for i32 in range(3 if N > 1 else 1):
 			for i22 in range(2 if N > 2 else 1):
@@ -218,7 +218,7 @@ def mki213(N, sel = 'all'):
 										rot(n, a2, i24*180.0, c2)
 										rot(n, a3, i35*120.0, c3)
 										rot(n, a2, i25*180.0, c2)
-	print len(seenit)
+	print(len(seenit))
 	cmd.delete('base80345769083457')
 	cmd.set_view(v)
 
@@ -253,7 +253,7 @@ def mkp23(N, R=43.5, i=0, sel = 'all'):
 		  xyz.rotation_matrix_degrees(a3[1],120),
 		  xyz.rotation_matrix_degrees(a3[2],120), ]
 	C = alphabet
-	print a2, c2, a3, c3
+	print(a2, c2, a3, c3)
 	for i21 in range(4):
 		for i32 in range(3 if N > 1 else 1):
 			for i22 in range(4 if N > 2 else 1):
@@ -292,7 +292,7 @@ def mkp23(N, R=43.5, i=0, sel = 'all'):
 										if i24 > 0: rot(n, a2[i24], 180.0, c2)
 										if i35 > 0: rot(n, a3[i35], 120.0, c3)
 										if i25 > 0: rot(n, a2[i25], 180.0, c2)
-	print "seen:",len(seenit)
+	print("seen:",len(seenit))
 	cmd.delete('base80345769083457')
 	cmd.set_view(v)
 
@@ -486,7 +486,7 @@ def get_fixed_size_contigs(x,n=7):
 	f = []
 	for c in get_contigs(x):
 		for i in range(0,len(c)-n+1):
-			f.append(range(c[i],c[i]+n))
+			f.append(list(range(c[i],c[i]+n)))
 	return f
 
 def tmpname():
@@ -515,9 +515,9 @@ def gen_helical_alignments(sele1,sele2,pref="HALN"):
 			name2 = pref+"_"+tmpname()
 			algn2 = name2+" and "+hsel2
 			cmd.create(name2,sele2)
-			print algn2,algn1
-			print name1+" and chain A and "+hsel1
-			print name2+" and chain Z and "+hsel2
+			print(algn2,algn1)
+			print(name1+" and chain A and "+hsel1)
+			print(name2+" and chain Z and "+hsel2)
 			# now align them
 			cmd.align( name2+" and chain Z and "+hsel2, name1+" and chain A and "+hsel1 )
 			name3 = pref+"_%03i_%03i"%(i,j)
@@ -563,7 +563,7 @@ def alignsym(sel="all",arch="I32",ax1=Vec(0,0,1),ax2=Vec(0.356825,0.000002,0.934
 		tgt1 = Vec( 0.85065080835204, 0.52573111211914, 0.00000000000000 ).normalized()
 		tgt2 = Vec( 0.93417235896272, 0.00000000000000, 0.35682208977309 ).normalized()
 	if abs(ax1.angle(ax2) - tgt1.angle(tgt2) ) > 0.001:
-		print "your axes aren't spaced correctly for",arch,"angle should be",tgt1.angle(tgt2)
+		print("your axes aren't spaced correctly for",arch,"angle should be",tgt1.angle(tgt2))
 		return
 	x = alignvectors( ax1, ax2, tgt1, tgt2 )
 	xform(sel,x)
@@ -609,7 +609,7 @@ def xtal_frames(tgt=None,skip=tuple(),r=100):
 		if not beg or not end: continue
 		if nf is not 2: showcyl(beg,end,0.3,col=(1.0,1.0,1.0))
 		else:           showcyl(beg,end,0.2,col=(1.0,0.5,0.2))
-		print round(nf),ctot,o
+		print(round(nf),ctot,o)
 
 def makeh(sele='vis',n=10):
 	cmd.delete('helix')
@@ -621,7 +621,7 @@ def makeh(sele='vis',n=10):
 		cmd.create('Htmp%i'%i,'tmp')
 		xform('Htmp%i'%i,x)
 		cmd.alter('Htmp%i'%i,"chain='%s'"%ROSETTA_CHAINS[i])
-		print ROSETTA_CHAINS[i]
+		print(ROSETTA_CHAINS[i])
 		x = x * x0
 	cmd.create("HELIX",'Htmp*')
 	cmd.delete("Htmp*")
@@ -648,6 +648,6 @@ def load_tests(loader, tests, ignore):
 if __name__ == '__main__':
    import doctest
    r = doctest.testmod()
-   print r
+   print(r)
 
 

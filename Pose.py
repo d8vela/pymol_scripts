@@ -57,7 +57,7 @@ def Pack():
 	pymover.apply(pose)
 
 	# Output Total Energy of Packed Structure
-	print "Total Energy: ", total_energy
+	print("Total Energy: ", total_energy)
 
 cmd.extend("Pack", Pack)
 
@@ -71,7 +71,7 @@ def NetCharge():
 	pose = pdb2pose()
 	net_charge = protocols.simple_filters.NetChargeFilter()
 	nc = net_charge.compute(pose)
-	print 'Net Charge: ' ,  nc 
+	print('Net Charge: ' ,  nc) 
 
 cmd.extend("NetCharge", NetCharge)
 
@@ -85,7 +85,7 @@ def OversaturatedHbondAcceptor():
 
 	# Get Number of Atoms Not Passing the Filter
 	atom_count = over_sat.report_sm(pose)
-	print 'OversaturatedHbondAcceptor: ' , atom_count
+	print('OversaturatedHbondAcceptor: ' , atom_count)
 
 cmd.extend("OversaturatedHbondAcceptor", OversaturatedHbondAcceptor)
 
@@ -125,9 +125,9 @@ def Ddg():
 	dG_unbound = full_scorefxn(pose)
 
 	# Get ddG
-	print 'Unbound Total Energy (dG): ', dG_unbound
-	print 'Bound Total Energy (dG): ', dG_bound
-	print 'Interface Energy (ddG): ' , dG_unbound - dG_bound
+	print('Unbound Total Energy (dG): ', dG_unbound)
+	print('Bound Total Energy (dG): ', dG_bound)
+	print('Interface Energy (ddG): ' , dG_unbound - dG_bound)
 
 cmd.extend("Ddg", Ddg)
 
@@ -141,7 +141,7 @@ def ShapeComplementarity():
 
 	# Get Number of Atoms Not Passing the Filter
 	sc = filt.report_sm(pose)
-	print 'ShapeComplementarity: ' , sc
+	print('ShapeComplementarity: ' , sc)
 
 cmd.extend("ShapeComplementarity", ShapeComplementarity)
 
@@ -165,9 +165,9 @@ def InterfaceSasa():
 	translate.apply(pose)
 	area_unbound = sasa.calculate(pose)
 
-	print 'Unbound SASA: ', area_unbound
-	print 'Bound SASA: ', area_bound
-	print 'Interface SASA: ' , area_unbound - area_bound
+	print('Unbound SASA: ', area_unbound)
+	print('Bound SASA: ', area_bound)
+	print('Interface SASA: ' , area_unbound - area_bound)
 
 cmd.extend("InterfaceSasa", InterfaceSasa)
 
@@ -182,7 +182,7 @@ def TotalSasa():
 	# Get SASA
 	sasa = core.scoring.sasa.SasaCalc()
 	area = sasa.calculate(pose)
-	print 'TotalSasa: ' , area
+	print('TotalSasa: ' , area)
 
 	# Visualize in PyMOL
 	cmd.hide("surface");

@@ -4,14 +4,14 @@ from pymol import cmd
 
 import sys,os
 
-from MoleculeUtils import selectPolarProtons
-from MoleculeUtils import selectApolarProtons
-from MoleculeUtils import colorCPK
-from PackingMeasureUtils import loadPackingPDB
+from .MoleculeUtils import selectPolarProtons
+from .MoleculeUtils import selectApolarProtons
+from .MoleculeUtils import colorCPK
+from .PackingMeasureUtils import loadPackingPDB
 
 def loadInterfacePDB(file,name=None,native=None):
 
-	print " Loading interface PDB %s"%(file)
+	print(" Loading interface PDB %s"%(file))
 
 	if name is None:
 		name = name = os.path.basename(file)

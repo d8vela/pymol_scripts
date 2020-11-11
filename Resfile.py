@@ -40,7 +40,7 @@ def resfile(file,color="red"):
 		elif line[:1] == "#":
 			# Remove newline feeds
 			line.rstrip("\n")
-			print "\n%s"%(line)
+			print("\n%s"%(line))
 
 cmd.extend("resfile",resfile)
 
@@ -83,7 +83,7 @@ def series_resfile(color="orange"):
 			elif line[:1] == "#":
 				# Remove newline feeds
 				line.rstrip("\n")
-				print "\n%s"%(line)
+				print("\n%s"%(line))
 
 	cmd.disable('all');
 	cmd.enable(fname_rem);
@@ -112,8 +112,8 @@ def move_down():
 	cmd.orient
 def move_up():
 	enabled_objs = cmd.get_names("objects",enabled_only=1)
-        all_objs = cmd.get_names("objects",enabled_only=0)
-        for obj in enabled_objs:
+	all_objs = cmd.get_names("objects",enabled_only=0)
+	for obj in enabled_objs:
                 cmd.disable(obj)
                 last_obj=obj
                 for i in range(0,len(all_objs)):

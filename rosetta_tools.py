@@ -37,7 +37,7 @@ from time import sleep
 import math       # floor, range, among others
 #import operator  # used once to sort a list of tuples on a particular element
 import colorsys  # to convert hsv values to rgb
-from tkMessageBox import showerror  # to get showerror method
+from tkinter.messagebox import showerror  # to get showerror method
 
 # test import
 #from pmg_tk.skins import PMGSkin
@@ -50,7 +50,7 @@ try:
 	from pymol import _cmd  # used by the hbond function
 	import chempy
 except ImportError:
-	print "Redefining pymol functions for testing..."
+	print("Redefining pymol functions for testing...")
 	class pymol:
 		class cmd:
 			pass
@@ -215,7 +215,7 @@ def hbond(name=None,a1=None,a2=None,r=1.0,g=1.0,b=0.2,weight=0.03,dash_gap=0.20,
 	"""
 
 	if (a1 == None or a2 == None):
-		print "a1 and a2 cannot be None. Please specify values for a1 and a2."
+		print("a1 and a2 cannot be None. Please specify values for a1 and a2.")
 		return
 
 	# Convert arguments into floating point values
@@ -534,8 +534,8 @@ class RDGroup:
 			
 			match_object = pattern_object.search( bond_info )
 			if ( match_object == None ):
-				print line
-				print "No match found"
+				print(line)
+				print("No match found")
 				continue
 			(don_chain, don_resn, don_resi, don_icode, don_res_atom, acc_chain, acc_resn, acc_resi, acc_icode, acc_res_atom) = match_object.groups()
 
@@ -584,8 +584,8 @@ class RDGroup:
 				
 				match_object = pattern_object.search( atom_datum )
 				if ( match_object == None ):
-					print line
-					print "No match found"
+					print(line)
+					print("No match found")
 					continue
 				
 				(chain, res_num, atom_name) = match_object.groups()
@@ -603,7 +603,7 @@ class RDGroup:
 			command = "%s -database %s -s %s -ignore_unrecognized_res -no_output" % ( self.execpath, pathToDatabaseFiles, pathToPDBFile )
 		except:
 			self.childFinished = -1
-			print "Rosetta Tools Plugin: Path to executable not set. Please specify the path to a Rosetta executable in the .rosettaplugin file."
+			print("Rosetta Tools Plugin: Path to executable not set. Please specify the path to a Rosetta executable in the .rosettaplugin file.")
 			return
 
 		self.commandRun = command  # save this so we can output the command to the PyMOL window
@@ -635,7 +635,7 @@ class RDGroup:
 		#rj Done with paths file. Now read the att file. All the att file contains is the path to the executable, right Yi?
 		if ( os.path.exists(init_file_name) ):
 			init_file = open( init_file_name, "r" )
-			for line in init_file.xreadlines():
+			for line in init_file:
 				if ( line.find("rosetta_executable") != -1 ):
 					self.path_to_executable = line.split()[1]
 				if ( line.find("rosetta_database") != -1 ):
@@ -648,7 +648,7 @@ class RDGroup:
 						"in your home directory.\nrosetta_executable path/to/exec\nrosetta_database path/to/database", parent=self.parent )
 			return
 
-		print "Rosetta Tools Plugin: Scoring structure to find hydrogen bonds..."
+		print("Rosetta Tools Plugin: Scoring structure to find hydrogen bonds...")
 
 		# set values for some of the cgo object parameters
 		bond_width = 0.04
@@ -657,7 +657,7 @@ class RDGroup:
 
 		# if no objects are loaded, do nothing except print to the log
 		if ( len(cmd.get_object_list()) == 0 ):   # cmd.get_names could also be used
-			print "Rosetta Tools Plugin: ERROR 001: No structure found. Please load a structure before using this plugin."
+			print("Rosetta Tools Plugin: ERROR 001: No structure found. Please load a structure before using this plugin.")
 			return
 
 		# first check for files in the current working directory
@@ -684,11 +684,11 @@ class RDGroup:
 			
 			if ( self.interface_hbonds_only ):
 				if ( ( object + "-iface-hb" ) in selection_list ):
-					print "Rosetta Tools Plugin: Interface H-bonds for object '" + object + "' already exist. Delete CGO object to recreate bonds."
+					print("Rosetta Tools Plugin: Interface H-bonds for object '" + object + "' already exist. Delete CGO object to recreate bonds.")
 					continue
 			else:
 				if ( ( object + "-hb" ) in selection_list ):
-					print "Rosetta Tools Plugin: Bonds for object '" + object + "' already exist. Delete CGO object to recreate bonds."
+					print("Rosetta Tools Plugin: Bonds for object '" + object + "' already exist. Delete CGO object to recreate bonds.")
 					continue
 
 			# concatenate the path to the filename and check if the file exists
@@ -696,10 +696,10 @@ class RDGroup:
 			absolute_file_path = os.path.join( path_to_pdb_files, filename )
 
 			if ( os.path.exists(path_to_pdb_files) != True ):
-				print "Rosetta Tools Plugin: ERROR 002: Path doesn't exist. A valid path to the PDB file must be specified. Skipping this structure."
+				print("Rosetta Tools Plugin: ERROR 002: Path doesn't exist. A valid path to the PDB file must be specified. Skipping this structure.")
 				continue
 			if ( os.path.isfile(absolute_file_path) != True ):
-				print "Rosetta Tools Plugin: ERROR 003: Structure file " + filename + " not found. Issue fetch PDBID and retry."
+				print("Rosetta Tools Plugin: ERROR 003: Structure file " + filename + " not found. Issue fetch PDBID and retry.")
 				continue
 
 			# Need to start a new thread/process to run rosetta with the right flags and create the hb output.
@@ -716,7 +716,7 @@ class RDGroup:
 			# really.
 
 			command = "%s -database \"%s\" -s \"%s\" -ignore_unrecognized_res -no_output" % (self.path_to_executable, self.path_to_database_files, absolute_file_path)
-			print "Rosetta Tools Plugin: Running command: '" + command + "'"
+			print("Rosetta Tools Plugin: Running command: '" + command + "'")
 			try:
 				p = Popen(command, stdout=PIPE, stderr=PIPE, shell=True)
 				output,error = p.communicate()
@@ -759,10 +759,10 @@ class RDGroup:
 				#	unsHbDataStart = 1
 
 			if ( len(hbData) == 0 ):
-				print "Rosetta Tools Plugin: Hydrogen Bond info not found in output from Rosetta command."
+				print("Rosetta Tools Plugin: Hydrogen Bond info not found in output from Rosetta command.")
 			else:
-				print "Rosetta Tools Plugin: The following hydrogen bonds were found:"
-				print "\n".join( hbData )
+				print("Rosetta Tools Plugin: The following hydrogen bonds were found:")
+				print("\n".join( hbData ))
 
 				# parse up the lines into 9-tuples containing the residue numbers in the hydrogen bond, the energy and the distance
 				# don_chain, don_resi, don_resn, don_res_atom, acc_chain, acc_resi, acc_resn, acc_atom, energy, distance) )
@@ -775,8 +775,8 @@ class RDGroup:
 					best_energy = float(self.sortedHbDataTuples[0][8])
 					worst_energy = float(self.sortedHbDataTuples[-1][8]) # will be zero, since Ehb shouldn't give positive values
 				except:
-					print "Error in hydrogen bond data."
-					print self.sortedHbDataTuples
+					print("Error in hydrogen bond data.")
+					print(self.sortedHbDataTuples)
 					return
 
 
@@ -824,7 +824,7 @@ class RDGroup:
 				# need the color keys to be in sorted order, as floats. unfortunately, no way to convert a list
 				# of string to a list of floats easily. needed because this list is what we'll go through to figure
 				# out what to color each hbond.
-				colorKeys = self.colorDict.keys()
+				colorKeys = list(self.colorDict.keys())
 				fColorKeys = []
 				for each in colorKeys:
 					fColorKeys.append(float(each))
@@ -848,11 +848,11 @@ class RDGroup:
 				try:
 					cmd.set("label_size", "12")
 				except:
-					print "Rosetta Tools Plugin: Old version of PyMOL. Default sized labels being used."
+					print("Rosetta Tools Plugin: Old version of PyMOL. Default sized labels being used.")
 
 				# last thing before we start going through the tuples is to print out a line to the background
 				# to explain what the lines being printed after this represent (interface bonds)
-				print "Rosetta Tools Plugin: The following interface spanning hydrogen bonds were found:"
+				print("Rosetta Tools Plugin: The following interface spanning hydrogen bonds were found:")
 				
 				# now go through the data tuples and call the hbond function
 				model = cmd.get_model(object)
@@ -884,10 +884,10 @@ class RDGroup:
 
 					# Check to make sure we got something out of index
 					if( len(x1) < 1):
-						print "Rosetta Tools Plugin: Selection " + sele1_exp + " has no atoms."
+						print("Rosetta Tools Plugin: Selection " + sele1_exp + " has no atoms.")
 						continue
 					if( len(x2) < 1):
-						print "Rosetta Tools Plugin: Selection " + sele2_exp + " has no atoms."
+						print("Rosetta Tools Plugin: Selection " + sele2_exp + " has no atoms.")
 						continue
 
 					a1 = model.atom[ x1[0][1] - 1 ]
@@ -922,9 +922,9 @@ class RDGroup:
 						cgoObject = hbond(name=name, a1=a1, a2=a2, r=rgbTuple[0], g=rgbTuple[1], b=rgbTuple[2],
 											weight=bond_width, dash_gap=gap_length, dash_length=dash_length, transparency=transparency )
 					except:
-						print sele1_exp
-						print sele2_exp
-						print "Rosetta Tools Plugin: ERROR 007: Error in creating CGO object for bond."
+						print(sele1_exp)
+						print(sele2_exp)
+						print("Rosetta Tools Plugin: ERROR 007: Error in creating CGO object for bond.")
 						# to next bond
 						continue
 					
@@ -932,14 +932,14 @@ class RDGroup:
 					#distanceAndEnergyText = '"%sA E:%s"' % (str(round(distance, 2)), str(round(energy, 2)))
 					energyText = '"E: %s"' % (str(round(energy, 2)))
 					if (don_chain != acc_chain):
-						if (labelList.has_key(sele1_exp)):
+						if (sele1_exp in labelList):
 							labelList[sele1_exp] = "%s, %s" % (labelList[sele1_exp], energyText)
 						else:
 							labelList[sele1_exp] = energyText
 					
 						# print out a line containing all the info in the PDB file so people can check the energy easily
-						print "Rosetta Tools Plugin: %s %s-%s %s - %s-%s %s: distance: %2.2f, hbE: %2.2f" % \
-							(object, don_resn, don_resi, don_res_atom, acc_resn, acc_resi, acc_res_atom, distance, energy)
+						print("Rosetta Tools Plugin: %s %s-%s %s - %s-%s %s: distance: %2.2f, hbE: %2.2f" % \
+							(object, don_resn, don_resi, don_res_atom, acc_resn, acc_resi, acc_res_atom, distance, energy))
 
 					# save into our arrays for "load"ing later
 					bondsObjects.extend( cgoObject )
@@ -954,12 +954,12 @@ class RDGroup:
 				cmd.load_cgo( bondsObjects, cgo_objects_display_name )
 
 				# go through the list of labels and display them
-				for sele_exp in labelList.keys():
+				for sele_exp in list(labelList.keys()):
 					try:
 						cmd.label(sele_exp, labelList[sele_exp])
 					except:
-						print sele_exp
-						print "Rosetta Tools Plugin: ERROR 008: Error in creating bond label."
+						print(sele_exp)
+						print("Rosetta Tools Plugin: ERROR 008: Error in creating bond label.")
 						# to next bond
 					
 			
@@ -999,7 +999,7 @@ class RDGroup:
 			#	cmd.load_cgo( unsatisfied, object + "-unsat" )
 
 
-			print "Rosetta Tools Plugin: Object " + object + " finished."
+			print("Rosetta Tools Plugin: Object " + object + " finished.")
 
 		# restore the saved view
 		cmd.set_view(my_view)
@@ -1017,7 +1017,7 @@ class RDGroup:
 		init_file_name = os.environ['HOME'] + '/.rosettatoolsplugin'
 		if ( os.path.exists(init_file_name) ):
 			init_file = open( init_file_name, "r" )
-			for line in init_file.xreadlines():
+			for line in init_file:
 				if ( line.find("quilt_executable") != -1 ):
 					self.path_to_quilt_executable = line.split()[1]
 			init_file.close()
@@ -1027,11 +1027,11 @@ class RDGroup:
 						"in your home directory.\nquilt_executable path/to/executable", parent=self.parent )
 			return
 
-		print "Rosetta Tools Plugin: Running QUILT to find hydrophobic patches..."
+		print("Rosetta Tools Plugin: Running QUILT to find hydrophobic patches...")
 
 		# if no objects are loaded, do nothing except print to the log
 		if ( len(cmd.get_object_list()) == 0 ):   # cmd.get_names could also be used
-			print "Rosetta Tools Plugin: ERROR 001: No structure found. Please load a structure before using this plugin."
+			print("Rosetta Tools Plugin: ERROR 001: No structure found. Please load a structure before using this plugin.")
 			return
 
 		# first check for files in the current working directory
@@ -1053,7 +1053,7 @@ class RDGroup:
 			# visualize the patches in that structures, load another structure and visualize again
 			# but the quilt run is not performed again.
 			if ( ( object + "-hpatch" ) in selection_list ):
-				print "Rosetta Tools Plugin: Largest hydrophobic patch for object '" + object + "' already exists. Delete CGO object to redetermine patch."
+				print("Rosetta Tools Plugin: Largest hydrophobic patch for object '" + object + "' already exists. Delete CGO object to redetermine patch.")
 				continue
 
 			# concatenate the path to the filename and check if the file exists
@@ -1061,10 +1061,10 @@ class RDGroup:
 			absolute_file_path = os.path.join( path_to_pdb_files, filename )
 
 			if ( os.path.exists(path_to_pdb_files) != True ):
-				print "Rosetta Tools Plugin: ERROR 002: Path doesn't exist. A valid path to the PDB file must be specified. Skipping this structure."
+				print("Rosetta Tools Plugin: ERROR 002: Path doesn't exist. A valid path to the PDB file must be specified. Skipping this structure.")
 				continue
 			if ( os.path.isfile(absolute_file_path) != True ):
-				print "Rosetta Tools Plugin: ERROR 003: Structure file " + filename + " not found. Issue fetch PDBID and retry."
+				print("Rosetta Tools Plugin: ERROR 003: Structure file " + filename + " not found. Issue fetch PDBID and retry.")
 				continue
 
 			# Need to start a new thread/process to run rosetta with the right flags and create the hb output.
@@ -1081,7 +1081,7 @@ class RDGroup:
 			# really.
 
 			command = "%s -n 252 -ep 1.0 -P CS \"%s\"" % (self.path_to_quilt_executable, absolute_file_path)
-			print "Rosetta Tools Plugin: Running command: '" + command + "'"
+			print("Rosetta Tools Plugin: Running command: '" + command + "'")
 			try:
 				p = Popen(command, stdout=PIPE, stderr=PIPE, shell=True)
 				output,error = p.communicate()
@@ -1112,14 +1112,14 @@ class RDGroup:
 						individual_patch_data.append(line)
 
 			if ( len(all_patch_data) == 0 ):
-				print "Rosetta Tools Plugin: Hydrophobic patch info not found in output from quilt command."
+				print("Rosetta Tools Plugin: Hydrophobic patch info not found in output from quilt command.")
 			else:
 				#print allPatchData
-				print "Rosetta Tools Plugin: The following atoms are in hydrophobic patches:"
+				print("Rosetta Tools Plugin: The following atoms are in hydrophobic patches:")
 				patch_num = 1
 				for patch_data in all_patch_data:
 				
-					print "Patch " + str(patch_num) + ": "
+					print("Patch " + str(patch_num) + ": ")
 					# parse up the lines into 2-tuples containing the residue number and atom name
 					# don_chain, don_resi, don_resn, don_res_atom, acc_chain, acc_resi, acc_resn, acc_atom, energy, distance) )
 					patch_data_tuples = self.getPatchData( patch_data )
@@ -1149,8 +1149,8 @@ class RDGroup:
 						try:
 							cmd.select( patch_sele, sele_expr )
 						except:
-							print sele_expr
-							print "Rosetta Tools Plugin: ERROR 007: Error in coloring patch."
+							print(sele_expr)
+							print("Rosetta Tools Plugin: ERROR 007: Error in coloring patch.")
 							continue
 						sele_expr = ""
 						
@@ -1170,7 +1170,7 @@ class RDGroup:
 				cmd.hide("(all and hydro)")
 				cmd.deselect()
 			
-			print "Rosetta Tools Plugin: Object " + object + " finished."
+			print("Rosetta Tools Plugin: Object " + object + " finished.")
 
 		# restore the saved view
 		cmd.set_view(my_view)
@@ -1188,7 +1188,7 @@ class RDGroup:
 if __name__ == '__main__':
 	import Pmw
 
-	from Tkinter import *
+	from tkinter import *
 	# something has to serve as the parent application which the __init__ method of
 	# HBondViewer will belong to. that's why we have to have a little Tk window with an
 	# exit button pop up during testing.

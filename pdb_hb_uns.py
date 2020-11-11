@@ -71,7 +71,7 @@ def create_ds_uns( lines, name ):
 		if type == 'SCACC' or type == 'SCDON': uns['uns_sc'].append( UnsAtom(line) )
 		elif type == 'BBACC' or type == 'BBDON': uns['uns_bb'].append( UnsAtom(line) )
 
-	for type,list in uns.items():
+	for type,list in list(uns.items()):
 		if list == []: continue
 		selstr = string.join( [ '/%s//%s/%s/%s' % ( name, atom.chain, atom.resi, atom.atom ) for atom in list ], ' or ' )
 		typename = '%s_%s' % ( type, name )
@@ -99,7 +99,7 @@ def pdb_hbonds_and_uns():
 		source = None
 		if os.path.exists( '%s.pdb' % name ): source = file( name + '.pdb', 'r' )
 		elif os.path.exists( '%s.pdb.gz' % name ): source = gzip.open( '%s.pdb.gz' % name, 'r' )
-		else: print 'cannot find source pdb file for', name; continue
+		else: print('cannot find source pdb file for', name); continue
 
 		hb_lines = []; ds_lines = []
 
@@ -111,13 +111,13 @@ def pdb_hbonds_and_uns():
 			if line.startswith("Loc, res, pos, pdb"): hb_start = True
 			if line.startswith("DS "): ds_lines.append( line )
 
-		if hb_lines == []: print 'no hbond lines found for %s' % name
+		if hb_lines == []: print('no hbond lines found for %s' % name)
 		else:
-			print 'Showing Rosetta hbonds for %s...' % name
+			print('Showing Rosetta hbonds for %s...' % name)
 			create_hbonds( hb_lines, name )
-		if ds_lines == []: print 'no decoystats lines found for %s' % name
+		if ds_lines == []: print('no decoystats lines found for %s' % name)
 		else:
-			print 'Showing Rosetta buried unsatisfieds for %s...' % name
+			print('Showing Rosetta buried unsatisfieds for %s...' % name)
 			create_ds_uns( ds_lines, name )
 
 cmd.extend('pdb_hb_uns',pdb_hbonds_and_uns)

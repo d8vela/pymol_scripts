@@ -4,14 +4,14 @@ from pymol import cmd
 
 import sys,os
 
-from MoleculeUtils import selectPolarProtons
-from MoleculeUtils import selectApolarProtons
-from MoleculeUtils import colorCPK
-from PackingMeasureUtils import loadPackingPDB
+from .MoleculeUtils import selectPolarProtons
+from .MoleculeUtils import selectApolarProtons
+from .MoleculeUtils import colorCPK
+from .PackingMeasureUtils import loadPackingPDB
 
 def loadSurfaceInterfacePDB( file,name=None,native=None,wt=None):
 
-        print " Loading interface PDB %s"%(file)
+        print(" Loading interface PDB %s"%(file))
 
         if name is None:
                 name = name = os.path.basename(file)
@@ -58,8 +58,8 @@ def loadSurfaceInterfacePDB( file,name=None,native=None,wt=None):
 
                         cmd.color(backbone_colorlist[curr_bb_color], chainname)
                         #changing....
-			colorCPK(interfacename,backbone_colorlist[curr_bb_color]) 
-			curr_bb_color = curr_bb_color+1
+                        colorCPK(interfacename,backbone_colorlist[curr_bb_color]) 
+                        curr_bb_color = curr_bb_color+1
                         if(curr_bb_color == len(backbone_colorlist)):
                                 curr_bb_color = 0
 
@@ -163,8 +163,8 @@ def surfaceInterfacePDB():
 
                         cmd.color(backbone_colorlist[curr_bb_color], chainname)
                         #changing....
-			colorCPK(interfacename,backbone_colorlist[curr_bb_color]) 
-			curr_bb_color = curr_bb_color+1
+                        colorCPK(interfacename,backbone_colorlist[curr_bb_color]) 
+                        curr_bb_color = curr_bb_color+1
                         if(curr_bb_color == len(backbone_colorlist)):
                                 curr_bb_color = 0
 
@@ -244,7 +244,7 @@ cmd.extend("surfaceInterfacePDB",surfaceInterfacePDB)
 
 def loadInterfacePDB(file,name=None,native=None,wt=None):
 
-	print " Loading interface PDB %s"%(file)
+	print(" Loading interface PDB %s"%(file))
 
 	if name is None:
 		name = name = os.path.basename(file)
@@ -264,8 +264,8 @@ def loadInterfacePDB(file,name=None,native=None,wt=None):
 		   'salmon', 'lime', 'slate', 'magenta', 'orange', 'marine', \
 		   'olive', 'forest', 'firebrick', 'chocolate' ]
 	curr_bb_color = 0
-
- 	carbon_colorlist = ['teal', 'wheat', 'grey', 'pink' ]
+	
+	carbon_colorlist = ['teal', 'wheat', 'grey', 'pink']
 	curr_carbon_color = 0
 
 	# Derive selections for the interface, color by chain
@@ -347,8 +347,8 @@ def interfacePDB():
 		   'salmon', 'lime', 'slate', 'magenta', 'orange', 'marine', \
 		   'olive', 'forest', 'firebrick', 'chocolate' ]
 	curr_bb_color = 0
-
- 	carbon_colorlist = ['teal', 'wheat', 'grey', 'pink' ]
+	
+	carbon_colorlist = ['teal', 'wheat', 'grey', 'pink']
 	curr_carbon_color = 0
 
 	# Derive selections for the interface, color by chain
@@ -421,12 +421,11 @@ def interfacePDB():
 	
 	    # Show polar contacts
         #cmd.distance("hbonds","interfaceA","interfaceB",3.2,mode=1)
-        cmd.distance("hbonds","interfaceA","interfaceB",3.5,mode=2)
+	cmd.distance("hbonds","interfaceA","interfaceB",3.5,mode=2)
         #cmd.distance("hbonds","interfaceA","interfaceB",3.2,mode=3)
 
-
-        cmd.hide("labels")
-        cmd.hide("lines")
+	cmd.hide("labels")
+	cmd.hide("lines")
 	cmd.select("none")
 
 cmd.extend("interfacePDB",interfacePDB)
@@ -437,12 +436,12 @@ def stix():
 		   'salmon', 'lime', 'slate', 'magenta', 'orange', 'marine', \
 		   'olive', 'forest', 'firebrick', 'chocolate' ]
 	curr_bb_color = 0
-
- 	carbon_colorlist = ['teal', 'wheat', 'grey', 'pink' ]
+	
+	carbon_colorlist = ['teal', 'wheat', 'grey', 'pink']
 	curr_carbon_color = 0
 
 	# Hide lines before anything
-        cmd.hide("lines")
+	cmd.hide("lines")
 
 	# Derive selections for the interface, color by chain
 	cmd.select("interface", "none")
@@ -516,11 +515,10 @@ def stix():
 	
 	# Show polar contacts
         #cmd.distance("hbonds","interfaceA","interfaceB",3.2,mode=1)
-        cmd.distance("hbonds","interfaceA","interfaceB",4.5,mode=2)
+	cmd.distance("hbonds","interfaceA","interfaceB",4.5,mode=2)
         #cmd.distance("hbonds","interfaceA","interfaceB",3.2,mode=3)
 
-
-        cmd.hide("labels")
+	cmd.hide("labels")
 	cmd.select("none")
 	
 
@@ -532,12 +530,12 @@ def stiq():
 		   'salmon', 'lime', 'slate', 'magenta', 'orange', 'marine', \
 		   'olive', 'forest', 'firebrick', 'chocolate' ]
 	curr_bb_color = 0
-
- 	carbon_colorlist = ['teal', 'wheat', 'grey', 'pink' ]
+	
+	carbon_colorlist = ['teal', 'wheat', 'grey', 'pink']
 	curr_carbon_color = 0
 
 	# Hide lines before anything
-        cmd.hide("lines")
+	cmd.hide("lines")
 
 	# Derive selections for the interface, color by chain
 	cmd.select("interface", "none")
@@ -611,11 +609,11 @@ def stiq():
 	
 	# Show polar contacts
         #cmd.distance("hbonds","interfaceA","interfaceB",3.2,mode=1)
-        cmd.distance("hbonds","interfaceA","interfaceB",4.5,mode=2)
+	cmd.distance("hbonds","interfaceA","interfaceB",4.5,mode=2)
         #cmd.distance("hbonds","interfaceA","interfaceB",3.2,mode=3)
 
 
-        cmd.hide("labels")
+	cmd.hide("labels")
 	cmd.select("none")
 	
 

@@ -41,7 +41,7 @@ def gremlin(file,chain='B',s_score_th=1.5,prob_th=1,inc='0',color="red"):
 				l2_score = float(data[1])
 				s_score = float(data[2])
 				prob = float(data[3])
-				print prob
+				print(prob)
 
 				if pos1 == pos1_rem:
 					continue

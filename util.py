@@ -149,7 +149,7 @@ class Mat(object):
          try:
             return v.__rmul__(m)
          except:
-            print type(v)
+            print(type(v))
             raise NotImplementedError
    def __div__(m,v):
       return m*(1/v)
@@ -217,7 +217,7 @@ def com(sel="all"):
 def showcom(sel="all"):
    global numcom
    c=com(sel)
-   print "Center of mass: ",c
+   print("Center of mass: ",c)
    cgo = [pymol.cgo.COLOR, 1.0, 1.0, 1.0, SPHERE, c.x, c.y, c.z, 1.0] ## white sphere with 3A radius
    cmd.load_cgo(cgo, "com%i"%numcom)
    numcom += 1
@@ -355,7 +355,7 @@ def angle(p1,p2,p3=None):
 
 def dimeraxis1(m1,m2):
    if len(m1.atom) != len(m2.atom):
-      print "selections must contain the same number of atoms!"
+      print("selections must contain the same number of atoms!")
       return
    i = j = randrange(len(m1.atom))
    while j == i: j = randrange(len(m1.atom))
@@ -387,7 +387,7 @@ def dimeraxis(sel1,sel2,nsamp=100):
 
 def axisofrot1(m1,m2,m3):
    if len(m1.atom) != len(m2.atom) or len(m2.atom) != len(m3.atom) or len(m3.atom) != len(m1.atom):
-      print "selections must contain the same number of atoms!"
+      print("selections must contain the same number of atoms!")
       return
    i = randrange(len(m1.atom))
    a1,a2,a3 = Vec(m1.atom[i].coord),Vec(m2.atom[i].coord),Vec(m3.atom[i].coord)
@@ -571,7 +571,7 @@ def swell():
 		cmd.create("mix%03i"%i,"177L")
 		m = cmd.get_model("177L")
 		r = float(i)/100.0
-		print "mixing",r
+		print("mixing",r)
 		for j in range(len(m.atom)):
 			# for k in range(len(m.atom)):
 			# 	d = (a[j]-a[k]).length() - (b[j]-b[k]).length()
@@ -599,7 +599,7 @@ def mkhelix4(sel,t,r,n):
 		cmd.delete("h%i"%i)
 		cmd.create("h%i"%i,sel)
 		rt = 90.0 * (i%4)
-		print i,rt
+		print(i,rt)
 		if i%4==0 and i > 0:
 			cmd.create("hem%i"%i,"basehem")
 			trans("hem%i"%i,Vec(0,0,t*(int(i/4))))
@@ -643,7 +643,7 @@ def alignall(sel="",obj=None):
 	l = cmd.get_object_list()
 	if not obj: obj = l[0]
 	if obj not in l: 
-		print "ERROR object",obj,"not found!!!"
+		print("ERROR object",obj,"not found!!!")
 		return
 	for o in l:
 		if o==obj: continue
@@ -664,7 +664,7 @@ def showcst(fname):
 def bondzn():
 	for o in cmd.get_object_list():
 		for c,r in getres(o+" and elem ZN"):
-			print "add zn bonds for",o,"resi",r,"chain",c
+			print("add zn bonds for",o,"resi",r,"chain",c)
 			cmd.bond("(%s and resi %s and chain %s)"%(o,r,c), "(%s and elem N) within 2.5 of (%s and resi %s and chain %s)"%(o,o,r,c) )
 
 def mktetrafrom3(sel):
@@ -711,11 +711,11 @@ def printtetra3():
 		for j,v in enumerate(vecs):
 			t = r*v
 			if j%2==1:
-				print "%+.10F,%+.10F,%+.10F 0,0,0"%(t.x,t.y,t.z)			
+				print("%+.10F,%+.10F,%+.10F 0,0,0"%(t.x,t.y,t.z))			
 			else:
-				print "xyz %i %+.10F,%+.10F,%+.10F "%(i+1,t.x,t.y,t.z),
+				print("xyz %i %+.10F,%+.10F,%+.10F "%(i+1,t.x,t.y,t.z), end=' ')
 			
-	print
+	print()
 
 
 
@@ -772,7 +772,7 @@ def gen180(sele,n):
 
 
 def alignvis():
-	l = [k for k,v in cmd.get_vis().items() if v[0]]
+	l = [k for k,v in list(cmd.get_vis().items()) if v[0]]
 	l.sort()
 	b = l[0]
 	toprint = ""
@@ -783,7 +783,7 @@ def alignvis():
 					if j.startswith(i):
 						toprint = str(jj+1)
 			cmd.delete(i)
-	print "NEXT:",toprint
+	print("NEXT:",toprint)
 			
 
 cmd.extend("alignvis",alignvis)
@@ -803,7 +803,7 @@ def aligndimerz(sele,alignsele=None):
 	a = cmd.get_model(alignsele+" and chain A and name CA").atom
 	b = cmd.get_model(alignsele+" and chain B and name CA").atom
 	if len(a) != len(b) or len(a) == 0:
-		print "ERROR on %s: subunits are not the same size!"%alignsele
+		print("ERROR on %s: subunits are not the same size!"%alignsele)
 		return False
 	axis = Vec(0,0,0)
 	for i in range(len(a)):
@@ -827,7 +827,7 @@ def aligntrimerz(sele,alignsele=None):
 	c = cmd.get_model(alignsele+" and chain C and name CA").atom
 	# print "subunit lengths:",len(a),len(b),len(c)
 	if len(a) != len(b) or len(a) != len(c) or len(a) == 0:
-		print "ERROR on %s: subunits are not the same size!"%alignsele
+		print("ERROR on %s: subunits are not the same size!"%alignsele)
 		return False
 	axis = Vec(0,0,0)
 	for i in range(len(a)):
@@ -848,9 +848,9 @@ def aligntrimersindir(dir):
 		cmd.load(fn)
 		if aligntrimerz(fn[len(fn)-9:len(fn)-5]):
 			cmd.save(fn+"_alignz.pdb","chain A")
-			print "SUCCESS on",fn,fn[len(fn)-9:len(fn)-5]
+			print("SUCCESS on",fn,fn[len(fn)-9:len(fn)-5])
 		else:
-			print "ERROR on",fn
+			print("ERROR on",fn)
 
 
 
