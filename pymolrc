@@ -9,7 +9,7 @@ import os
 home = os.environ.get('HOME');
 
 sys.path.append("%s/scripts/python_scripts/"%(home))
-sys.path.append("%s/scripts/python_scripts/pymol_scripts"%(home))
+sys.path.append("%s/scripts/python_scripts/pymol_scripts/"%(home))
 
 from pymol_scripts import *
 
